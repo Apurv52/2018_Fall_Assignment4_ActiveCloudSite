@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\TabModel.cs" />
+    <Compile Remove="Views\Home\Class.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Home\Index - Copy.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
