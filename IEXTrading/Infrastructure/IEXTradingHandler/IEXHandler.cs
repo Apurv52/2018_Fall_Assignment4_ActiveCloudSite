@@ -81,7 +81,9 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
             return Equities;
         }
 
-        /* Top 5 stocks */
+        /* Top 5 stocks: We modified the API to extract the list of top 20 stocks which have seen the highest
+         * gain i.e. change in price (high - low) . From that list we selected the top 5 stocks which have 
+         * the higest percent change in price */
         public List<Equity> HighPrice()
         {
             string IEXTrading_API_PATH = BASE_URL + "/stock/market/collection/list?collectionName=gainers";
@@ -98,7 +100,7 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
 
             if (!equitiesList.Equals(""))
             {
-                equities = JsonConvert.DeserializeObject<List<Equity>>(equitiesList);
+                equities = JsonConvert.DeserializeObject<List<Equity>>(equitiesList, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
 
             }
 

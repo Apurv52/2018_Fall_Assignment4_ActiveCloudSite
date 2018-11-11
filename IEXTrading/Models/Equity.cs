@@ -8,6 +8,9 @@
     public class Equity
     {
         public int EquityId { get; set; }
+        public string companyName { get; set; }
+        public float peRatio { get; set; }
+        public float ytdChange { get; set; }
         public string date { get; set; }
         public float open { get; set; }
         public float high { get; set; }
@@ -21,6 +24,8 @@
         public string label { get; set; }
         public float changeOverTime { get; set; }
         public string symbol { get; set; }
+        public float week52High { get; set; }
+        public float week52Low { get; set; }
         
     }
 }

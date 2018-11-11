@@ -10,7 +10,7 @@
                 Symbol
             </th>
             <th>
-                Date
+                Name
             </th>
             <th>
                 Change Percent
@@ -20,6 +20,18 @@
             </th>
             <th>
                 High
+            </th>
+            <th>
+                PE Ratio
+            </th>
+            <th>
+                YTD Change
+            </th>
+            <th>
+                52 Week High
+            </th>
+            <th>
+                52 Week Low
             </th>
         </tr>
     </thead>
@@ -33,7 +45,7 @@
                 @Html.DisplayFor(modelItem => item.symbol)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.date)
+                @Html.DisplayFor(modelItem => item.companyName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.changePercent)
@@ -43,6 +55,18 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.high)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.peRatio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ytdChange)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.week52High)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.week52Low)
             </td>
         </tr>
         }

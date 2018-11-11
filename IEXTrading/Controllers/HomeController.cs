@@ -41,7 +41,8 @@ namespace MVCTemplate.Controllers
 
             //Save comapnies in TempData
             TempData["Companies"] = JsonConvert.SerializeObject(companies);
-           
+
+            
 
             return View(companies);
         }
@@ -67,6 +68,8 @@ namespace MVCTemplate.Controllers
             }
 
             CompaniesEquities companiesEquities = getCompaniesEquitiesModel(equities);
+
+            
 
             return View(companiesEquities);
         }
@@ -203,6 +206,8 @@ namespace MVCTemplate.Controllers
 
             //Save comapnies in TempData
             TempData["Equities"] = JsonConvert.SerializeObject(equities);
+
+                                                                 
                        
             return View(equities);
         }
