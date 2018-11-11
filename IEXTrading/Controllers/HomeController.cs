@@ -46,21 +46,9 @@ namespace MVCTemplate.Controllers
             return View(companies);
         }
         
-        public IActionResult TopBuy()
-        {
-            //Set ViewBag variable first
-            ViewBag.dbSucessEquity = 0;
-            IEXHandler webHandler = new IEXHandler();
-            List<Equity> equities = webHandler.HighPrice();
+       
 
-            //Save comapnies in TempData
-            TempData["Equities"] = JsonConvert.SerializeObject(equities);
-
-
-            return View(equities);
-        }
-
-
+        
         /****
          * The Chart action calls the GetChart method that returns 1 year's equities for the passed symbol.
          * A ViewModel CompaniesEquities containing the list of companies, prices, volumes, avg price and volume.
@@ -114,6 +102,26 @@ namespace MVCTemplate.Controllers
             dbContext.SaveChanges();
             ViewBag.dbSuccessComp = 1;
             return View("Symbols", companies);
+        }
+
+        /* Saves Gainer Stocks in Database*/
+
+        public IActionResult SaveGainer()
+        {
+           List<Equity> equities = JsonConvert.DeserializeObject<List<Equity>>(TempData["Equities"].ToString());
+            foreach (Equity equity in equities)
+            {
+                if (dbContext.Equities.Where(c => c.date.Equals(equity.date)).Count() == 0)
+                {
+                    dbContext.Equities.Add(equity);
+                }
+            }
+
+            dbContext.SaveChanges();
+            ViewBag.dbSuccessEquity = 1;
+
+            
+            return View(equities);
         }
 
         /****
@@ -184,6 +192,19 @@ namespace MVCTemplate.Controllers
             float avgprice = equities.Average(e => e.high);
             double avgvol = equities.Average(e => e.volume) / 1000000; //Divide volume by million
             return new CompaniesEquities(companies, equities.Last(), dates, prices, volumes, avgprice, avgvol);
+        }
+
+        public IActionResult TopBuy()
+        {
+            //Set ViewBag variable first
+            ViewBag.dbSuccessEquity = 0;
+            IEXHandler webHandler = new IEXHandler();
+            List<Equity> equities = webHandler.HighPrice();
+
+            //Save comapnies in TempData
+            TempData["Equities"] = JsonConvert.SerializeObject(equities);
+                       
+            return View(equities);
         }
 
     }
