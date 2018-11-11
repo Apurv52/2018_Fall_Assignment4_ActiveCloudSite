@@ -9,6 +9,7 @@ using IEXTrading.Models;
 using IEXTrading.Models.ViewModel;
 using IEXTrading.DataAccess;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace MVCTemplate.Controllers
 {
@@ -37,11 +38,28 @@ namespace MVCTemplate.Controllers
             IEXHandler webHandler = new IEXHandler();
             List<Company> companies = webHandler.GetSymbols();
 
+
             //Save comapnies in TempData
             TempData["Companies"] = JsonConvert.SerializeObject(companies);
+           
 
             return View(companies);
         }
+        
+        public IActionResult TopBuy()
+        {
+            //Set ViewBag variable first
+            ViewBag.dbSucessEquity = 0;
+            IEXHandler webHandler = new IEXHandler();
+            List<Equity> equities = webHandler.HighPrice();
+
+            //Save comapnies in TempData
+            TempData["Equities"] = JsonConvert.SerializeObject(equities);
+
+
+            return View(equities);
+        }
+        
 
         /****
          * The Chart action calls the GetChart method that returns 1 year's equities for the passed symbol.

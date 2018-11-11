@@ -40,9 +40,34 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
             if (!companyList.Equals(""))
             {
                 companies = JsonConvert.DeserializeObject<List<Company>>(companyList);
-                companies = companies.GetRange(0, 9);
+                companies = companies.GetRange(0, 20);
+
             }
             return companies;
+        }
+
+        /* Top 5 stocks */
+        public List<Equity> HighPrice()
+        {
+            string IEXTrading_API_PATH = BASE_URL + "/stock/market/collection/list?collectionName=gainers";
+            string equitiesList = "";
+
+            List<Equity> equities = null;
+
+            httpClient.BaseAddress = new Uri(IEXTrading_API_PATH);
+            HttpResponseMessage response = httpClient.GetAsync(IEXTrading_API_PATH).GetAwaiter().GetResult();
+            if (response.IsSuccessStatusCode)
+            {
+                equitiesList = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            }
+
+            if (!equitiesList.Equals(""))
+            {
+                equities = JsonConvert.DeserializeObject<List<Equity>>(equitiesList);                                               
+            }
+                 
+                       
+            return equities;
         }
 
         /****

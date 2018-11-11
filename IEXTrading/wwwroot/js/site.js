@@ -1,4 +1,21 @@
-﻿function getChart(dates, prices, vols, avgprice, avgvol) {
+﻿function getChart1(dates, prices, vols, avgprice, avgvol) {
+    var ctx = document.getElementById("myChart").getContext('2d');
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: dates.split(","),
+            datasets: [{
+                label: 'High Prices',
+                data: prices.split(","),
+                borderColor: 'rgba(0, 0, 250, 1)',
+                borderWidth: 1
+            }]
+        }
+    });
+}
+
+function getChart(dates, prices, vols, avgprice, avgvol) {
     var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
