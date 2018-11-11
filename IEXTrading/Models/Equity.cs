@@ -21,5 +21,6 @@
         public string label { get; set; }
         public float changeOverTime { get; set; }
         public string symbol { get; set; }
+        
     }
 }

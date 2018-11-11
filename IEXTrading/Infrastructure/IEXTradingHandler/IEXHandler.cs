@@ -12,6 +12,7 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
     {
         static string BASE_URL = "https://api.iextrading.com/1.0/"; //This is the base URL, method specific URL is appended to this.
         HttpClient httpClient;
+        
 
         public IEXHandler()
         {
@@ -46,30 +47,7 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
             return companies;
         }
 
-        /* Top 5 stocks */
-        public List<Equity> HighPrice()
-        {
-            string IEXTrading_API_PATH = BASE_URL + "/stock/market/collection/list?collectionName=gainers";
-            string equitiesList = "";
-
-            List<Equity> equities = null;
-
-            httpClient.BaseAddress = new Uri(IEXTrading_API_PATH);
-            HttpResponseMessage response = httpClient.GetAsync(IEXTrading_API_PATH).GetAwaiter().GetResult();
-            if (response.IsSuccessStatusCode)
-            {
-                equitiesList = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            }
-
-            if (!equitiesList.Equals(""))
-            {
-                equities = JsonConvert.DeserializeObject<List<Equity>>(equitiesList);                                               
-            }
-                 
-                       
-            return equities;
-        }
-
+        
         /****
          * Calls the IEX stock API to get 1 year's chart for the supplied symbol. 
         ****/
@@ -102,5 +80,32 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
 
             return Equities;
         }
+
+        /* Top 5 stocks */
+        public List<Equity> HighPrice()
+        {
+            string IEXTrading_API_PATH = BASE_URL + "/stock/market/collection/list?collectionName=gainers";
+            string equitiesList = "";
+
+            List<Equity> equities = null;
+
+            httpClient.BaseAddress = new Uri(IEXTrading_API_PATH);
+            HttpResponseMessage response = httpClient.GetAsync(IEXTrading_API_PATH).GetAwaiter().GetResult();
+            if (response.IsSuccessStatusCode)
+            {
+                equitiesList = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            }
+
+            if (!equitiesList.Equals(""))
+            {
+                equities = JsonConvert.DeserializeObject<List<Equity>>(equitiesList);
+
+            }
+
+            equities = equities.GetRange(0, 5);
+
+            return equities;
+        }
+
     }
 }

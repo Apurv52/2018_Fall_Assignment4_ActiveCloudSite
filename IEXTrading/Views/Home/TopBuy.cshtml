@@ -10,10 +10,13 @@
                 Symbol
             </th>
             <th>
+                Date
+            </th>
+            <th>
                 Change Percent
             </th>
             <th>
-                Date
+                Change
             </th>
             <th>
                 High
@@ -25,28 +28,31 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.symbol)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.changePercent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.high)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.symbol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.changePercent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.change)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.high)
+            </td>
+        </tr>
         }
         <tr>
             <td>
-                <a id="dbopt" asp-controller="Home" asp-action="PopulateSymbols"><img src="~/images/button_save-data.png" /></a>
+                <a id="dbopt" asp-controller="Home" asp-action="SaveGainer"><img src="~/images/button_save-data.png" /></a>
             </td>
         </tr>
     </tbody>
 </table>
 <script>
-    alertDbSave(@ViewBag.dbSuccessComp);
+    alertDbSave(@ViewBag.dbSuccessEquity);
 </script>
