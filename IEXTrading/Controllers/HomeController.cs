@@ -212,5 +212,11 @@ namespace MVCTemplate.Controllers
             return View(equities);
         }
 
+        public IActionResult Assignment()
+        {
+            return View();
+        }
+
+
     }
 }
