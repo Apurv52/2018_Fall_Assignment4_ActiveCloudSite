@@ -59,7 +59,7 @@ namespace MVCTemplate.Controllers
 
             return View(equities);
         }
-        
+
 
         /****
          * The Chart action calls the GetChart method that returns 1 year's equities for the passed symbol.
