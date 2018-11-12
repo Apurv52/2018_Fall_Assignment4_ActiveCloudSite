@@ -37,8 +37,6 @@ namespace MVCTemplate.Controllers
             ViewBag.dbSucessComp = 0;
             IEXHandler webHandler = new IEXHandler();
             List<Company> companies = webHandler.GetSymbols();
-
-
             //Save comapnies in TempData
             TempData["Companies"] = JsonConvert.SerializeObject(companies);
 
