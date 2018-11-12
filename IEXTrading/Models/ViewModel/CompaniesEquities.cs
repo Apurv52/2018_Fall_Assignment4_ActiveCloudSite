@@ -14,6 +14,7 @@ namespace IEXTrading.Models.ViewModel
         public string Volumes { get; set; }
         public float AvgPrice { get; set; }
         public double AvgVolume { get; set; }
+        
 
         public CompaniesEquities(List<Company> companies, Equity current, string dates, string prices, string volumes, float avgprice, double avgvolume)
         {
@@ -24,6 +25,7 @@ namespace IEXTrading.Models.ViewModel
             Volumes = volumes;
             AvgPrice = avgprice;
             AvgVolume = avgvolume;
+            
         }
     }
 }

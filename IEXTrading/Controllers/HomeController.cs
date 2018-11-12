@@ -42,8 +42,6 @@ namespace MVCTemplate.Controllers
             //Save comapnies in TempData
             TempData["Companies"] = JsonConvert.SerializeObject(companies);
 
-            
-
             return View(companies);
         }
         
@@ -162,6 +160,7 @@ namespace MVCTemplate.Controllers
                 dbContext.Equities.RemoveRange(dbContext.Equities);
                 dbContext.Companies.RemoveRange(dbContext.Companies);
             }
+            
             else if ("Companies".Equals(tableToDel))
             {
                 //Remove only those that don't have Equity stored in the Equitites table
@@ -169,6 +168,7 @@ namespace MVCTemplate.Controllers
                                                          .Where(c => c.Equities.Count == 0)
                                                                       );
             }
+            
             else if ("Charts".Equals(tableToDel))
             {
                 dbContext.Equities.RemoveRange(dbContext.Equities);

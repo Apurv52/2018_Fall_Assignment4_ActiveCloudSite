@@ -1,4 +1,6 @@
-﻿namespace IEXTrading.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+namespace IEXTrading.Models
 {
     public class ChartRoot
     {

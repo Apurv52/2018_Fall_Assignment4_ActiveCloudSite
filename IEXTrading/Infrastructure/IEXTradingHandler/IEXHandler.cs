@@ -26,7 +26,7 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
         ****/
         public List<Company> GetSymbols()
         {
-            string IEXTrading_API_PATH = BASE_URL + "ref-data/symbols";
+            string IEXTrading_API_PATH = BASE_URL + "/ref-data/symbols";
             string companyList = "";
 
             List<Company> companies = null;
@@ -40,8 +40,8 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
 
             if (!companyList.Equals(""))
             {
-                companies = JsonConvert.DeserializeObject<List<Company>>(companyList);
-                companies = companies.GetRange(0, 20);
+                companies = JsonConvert.DeserializeObject<List<Company>>(companyList, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                companies = companies.GetRange(0, 50);
 
             }
             return companies;
