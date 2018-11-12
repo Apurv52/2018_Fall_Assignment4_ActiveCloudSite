@@ -38,6 +38,11 @@ namespace MVCTemplate.Controllers
             IEXHandler webHandler = new IEXHandler();
             List<Company> companies = webHandler.GetSymbols();
 
+            Company CompanyRead2 = dbContext.Companies
+                                      .Include(c => c.Equities)
+                                      .OrderByDescending(c => c.symbol)
+                                      .First();
+
 
             //Save comapnies in TempData
             TempData["Companies"] = JsonConvert.SerializeObject(companies);
