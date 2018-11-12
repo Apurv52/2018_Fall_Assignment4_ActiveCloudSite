@@ -1,13 +1,19 @@
 ﻿body {
-    background-color: #CFC493;
+    background-color: #001f3f;
+    background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/UhGJuGw/global-business-finance-background_edwkxxznl__F0000.png");
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: #006747;
+    color: #DDDDDD;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .nav-bar {
-    background-color: #006747;
-    color: #CFC493;
+    background-color: black;
+    color: cornsilk;
     font-size: x-large;
+    text-align: center;
+    padding: 14px 16px;
+    opacity: 0.9;
 }
 
 .nav-bar > a {
