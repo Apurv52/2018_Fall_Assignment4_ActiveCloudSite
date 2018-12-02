@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using IEXTrading.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace IEXTrading.Infrastructure.IEXTradingHandler
 {
@@ -41,7 +42,7 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
             if (!companyList.Equals(""))
             {
                 companies = JsonConvert.DeserializeObject<List<Company>>(companyList, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-                companies = companies.GetRange(0, 50);
+                companies = companies.GetRange(0, 250);
 
             }
             return companies;
@@ -84,29 +85,67 @@ namespace IEXTrading.Infrastructure.IEXTradingHandler
         /* Top 5 stocks: We modified the API to extract the list of top 20 stocks which have seen the highest
          * gain i.e. change in price (high - low) . From that list we selected the top 5 stocks which have 
          * the higest percent change in price */
-        public List<Equity> HighPrice()
+        public StocksDetails GetResultsFromAPI(string symbol)
         {
-            string IEXTrading_API_PATH = BASE_URL + "/stock/market/collection/list?collectionName=gainers";
-            string equitiesList = "";
+            string IEXTrading_API_PATH = BASE_URL + "stock/" + symbol + "/stats";
+            string _stocklist = "";
 
-            List<Equity> equities = null;
+            StocksDetails sd = new StocksDetails();
 
             httpClient.BaseAddress = new Uri(IEXTrading_API_PATH);
             HttpResponseMessage response = httpClient.GetAsync(IEXTrading_API_PATH).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
             {
-                equitiesList = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                _stocklist = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             }
+            
+           var jsonObject = (JObject)JsonConvert.DeserializeObject(_stocklist, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+           
+            /*
+            var jsonObject = (JObject)JsonConvert.SerializeObject(_stocklist);
+            */
 
-            if (!equitiesList.Equals(""))
+            if (!jsonObject.Property("priceToBook").Value.ToString().Equals(""))
             {
-                equities = JsonConvert.DeserializeObject<List<Equity>>(equitiesList, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-
+                sd.priceToBook = Convert.ToDecimal(jsonObject.Property("priceToBook").Value.ToString());
             }
 
-            equities = equities.GetRange(0, 5);
+            if (!jsonObject.Property("dividendRate").Value.ToString().Equals(""))
+            {
+                sd.dividendRate = Convert.ToDecimal(jsonObject.Property("dividendRate").Value.ToString());
+            }
+            /*
+            if (!jsonObject.Property("year1ChangePercent").Value.ToString().Equals(""))
+            {
+                sd.year1ChangePercent = Convert.ToDecimal(jsonObject.Property("year1ChangePercent").Value.ToString());
+            }
+            */
+            if (!jsonObject.Property("EBITDA").Value.ToString().Equals(""))
+            {
+                sd.EBITDA = Convert.ToDecimal(jsonObject.Property("EBITDA").Value.ToString());
+            }
 
-            return equities;
+            if (!jsonObject.Property("week52high").Value.ToString().Equals(""))
+            {
+                sd.week52high = Convert.ToDecimal(jsonObject.Property("week52high").Value.ToString());
+            }
+
+            if (!jsonObject.Property("week52low").Value.ToString().Equals(""))
+            {
+                sd.week52low = Convert.ToDecimal(jsonObject.Property("week52low").Value.ToString());
+            }
+
+            if (!jsonObject.Property("latestEPS").Value.ToString().Equals(""))
+            {
+                sd.latestEPS = Convert.ToDecimal(jsonObject.Property("latestEPS").Value.ToString());
+            }
+
+
+            sd.companyName = jsonObject.Property("companyName").Value.ToString();
+            sd.symbol = symbol;
+
+            return sd;
+
         }
 
     }

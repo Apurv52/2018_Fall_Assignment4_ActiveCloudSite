@@ -1,80 +1,88 @@
-﻿@model IEnumerable<IEXTrading.Models.Equity>
+﻿@model List<IEXTrading.Models.StocksDetails>
+
+@{
+    ViewData["Title"] = "TopBuy";
+}
 
 <h2>TopBuy</h2>
 <hr />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Symbol
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Change Percent
-            </th>
-            <th>
-                Change
-            </th>
-            <th>
-                High
-            </th>
-            <th>
-                PE Ratio
-            </th>
-            <th>
-                YTD Change
-            </th>
-            <th>
-                52 Week High
-            </th>
-            <th>
-                52 Week Low
-            </th>
-        </tr>
-    </thead>
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Symbol
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    EBITDA
+                </th>
+                <th>
+                    priceToBook
+                </th>
+                <th>
+                    dividendRate
+                </th>
+                <th>
+                    latestEPS
+                </th>
+               
+                <th>
+                    52 Week High
+                </th>
+                <th>
+                    52 Week Low
+                </th>
+            </tr>
+        </thead>
 
-    <tbody>
+        <tbody>
 
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.symbol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.companyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.changePercent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.change)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.high)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.peRatio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ytdChange)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.week52High)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.week52Low)
-            </td>
-        </tr>
-        }
-        <br/>
-        <p>
-            The data below provides a detailed analysis of each of the selected stocks performance for better stock selection judgement
-        </p>
-        
-    </tbody>
-</table>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.symbol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.companyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EBITDA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priceToBook)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dividendRate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.latestEPS)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.week52high)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.week52low)
+                </td>
+            </tr>
+            }
+            <br />
+            
+            <p>
+                The data below provides a detailed analysis of each of the selected stocks performance for better stock selection judgement
+            </p>
+
+
+
+        </tbody>
+    </table>
+   
+}
+
 

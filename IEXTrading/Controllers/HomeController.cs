@@ -10,12 +10,16 @@ using IEXTrading.Models.ViewModel;
 using IEXTrading.DataAccess;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace MVCTemplate.Controllers
 {
     public class HomeController : Controller
     {
         public ApplicationDbContext dbContext;
+        public const string SessionKeyName = "StockData";
+
+
 
         public HomeController(ApplicationDbContext context)
         {
@@ -38,21 +42,18 @@ namespace MVCTemplate.Controllers
             IEXHandler webHandler = new IEXHandler();
             List<Company> companies = webHandler.GetSymbols();
 
-            Company CompanyRead2 = dbContext.Companies
-                                      .Include(c => c.Equities)
-                                      .OrderByDescending(c => c.symbol)
-                                      .First();
+            String companiesData = JsonConvert.SerializeObject(companies);
+            //int size = System.Text.ASCIIEncoding.ASCII.GetByteCount(companiesData);
 
-
-            //Save comapnies in TempData
-            TempData["Companies"] = JsonConvert.SerializeObject(companies);
+            HttpContext.Session.SetString(SessionKeyName, companiesData);
 
             return View(companies);
-        }
-        
-       
 
-        
+        }
+
+
+
+
         /****
          * The Chart action calls the GetChart method that returns 1 year's equities for the passed symbol.
          * A ViewModel CompaniesEquities containing the list of companies, prices, volumes, avg price and volume.
@@ -95,11 +96,19 @@ namespace MVCTemplate.Controllers
         ****/
         public IActionResult PopulateSymbols()
         {
-            List<Company> companies = JsonConvert.DeserializeObject<List<Company>>(TempData["Companies"].ToString());
+            string companiesData = HttpContext.Session.GetString(SessionKeyName);
+            List<Company> companies = null;
+            if (companiesData != "")
+            {
+                companies = JsonConvert.DeserializeObject<List<Company>>(companiesData);
+            }
+
             foreach (Company company in companies)
             {
-                //Database will give PK constraint violation error when trying to insert record with existing PK.
-                //So add company only if it doesnt exist, check existence using symbol (PK)
+                //Database will give PK constraint violation error when trying to insert a record with existing PK.
+                //So add company only if it doesn't exist, check its existence using symbol (PK)
+
+
                 if (dbContext.Companies.Where(c => c.symbol.Equals(company.symbol)).Count() == 0)
                 {
                     dbContext.Companies.Add(company);
@@ -108,6 +117,7 @@ namespace MVCTemplate.Controllers
             dbContext.SaveChanges();
             ViewBag.dbSuccessComp = 1;
             return View("Symbols", companies);
+
         }
 
         /* Saves Gainer Stocks in Database*/
@@ -117,7 +127,7 @@ namespace MVCTemplate.Controllers
            List<Equity> equities = JsonConvert.DeserializeObject<List<Equity>>(TempData["Equities"].ToString());
             foreach (Equity equity in equities)
             {
-                if (dbContext.Equities.Where(c => c.date.Equals(equity.date)).Count() == 0)
+                if (dbContext.Equities.Where(c => c.date.Equals(equity.symbol)).Count() == 0)
                 {
                     dbContext.Equities.Add(equity);
                 }
@@ -127,7 +137,7 @@ namespace MVCTemplate.Controllers
             ViewBag.dbSuccessEquity = 1;
 
             
-            return View(equities);
+            return View("Symbols", equities);
         }
 
         /****
@@ -201,21 +211,59 @@ namespace MVCTemplate.Controllers
             double avgvol = equities.Average(e => e.volume) / 1000000; //Divide volume by million
             return new CompaniesEquities(companies, equities.Last(), dates, prices, volumes, avgprice, avgvol);
         }
-
+        
         public IActionResult TopBuy()
         {
-            //Set ViewBag variable first
-            ViewBag.dbSuccessEquity = 0;
-            IEXHandler webHandler = new IEXHandler();
-            List<Equity> equities = webHandler.HighPrice();
+            List<Company> companies = dbContext.Companies.ToList();
 
-            //Save comapnies in TempData
-            TempData["Equities"] = JsonConvert.SerializeObject(equities);
+            StocksDetails temp = new StocksDetails();
+            List<StocksDetails> tempList = new List<StocksDetails>();
+            List<StocksDetails> _model = new List<StocksDetails>();
 
-                                                                 
-                       
-            return View(equities);
+            if (companies != null)
+            {
+                foreach (var item in companies)
+                {
+                    temp = ResultsFromAPI(item.symbol);
+                    if (temp != null)
+                    {
+                        tempList.Add(temp);
+                    }
+                }
+            }
+
+            if (tempList.Count != 0)
+            {
+                _model = tempList.OrderByDescending(x => x.EBITDA).ThenByDescending(x => x.dividendRate).ThenByDescending(x => x.priceToBook).ToList();
+            }
+
+            if (_model != null)
+            {
+                if (_model.Count >= 5)
+                {
+                    return View(_model.GetRange(0, 5));
+                }
+                else
+                {
+                    return View(_model);
+                }
+            }
+
+            return View(_model);
         }
+
+        public StocksDetails ResultsFromAPI(string symbol)
+        {
+            StocksDetails _cd = new StocksDetails();
+            if (symbol != null)
+            {
+                IEXHandler webHandler = new IEXHandler();
+                _cd = webHandler.GetResultsFromAPI(symbol);
+            }
+
+            return _cd;
+        }
+
 
         public IActionResult Assignment()
         {
