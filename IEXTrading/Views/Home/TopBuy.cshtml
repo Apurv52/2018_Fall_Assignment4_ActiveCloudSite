@@ -9,41 +9,41 @@
 
 @if (Model != null)
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Symbol
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    EBITDA
-                </th>
-                <th>
-                    priceToBook
-                </th>
-                <th>
-                    dividendRate
-                </th>
-                <th>
-                    latestEPS
-                </th>
-               
-                <th>
-                    52 Week High
-                </th>
-                <th>
-                    52 Week Low
-                </th>
-            </tr>
-        </thead>
+    <table class="table"> <font size="+1">
+    <thead>
+        <tr>
+            <th>
+                Symbol
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                EBITDA
+            </th>
+            <th>
+                priceToBook
+            </th>
+            <th>
+                dividendRate
+            </th>
+            <th>
+                latestEPS
+            </th>
 
-        <tbody>
+            <th>
+                52 Week High
+            </th>
+            <th>
+                52 Week Low
+            </th>
+        </tr>
+    </thead>
 
-            @foreach (var item in Model)
-            {
+    <tbody>
+
+        @foreach (var item in Model) 
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.symbol)
@@ -63,7 +63,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.latestEPS)
                 </td>
-                
+
                 <td>
                     @Html.DisplayFor(modelItem => item.week52high)
                 </td>
@@ -71,17 +71,17 @@
                     @Html.DisplayFor(modelItem => item.week52low)
                 </td>
             </tr>
-            }
-            <br />
-            
-            <p>
-                The data below provides a detailed analysis of each of the selected stocks performance for better stock selection judgement
-            </p>
+        }
+        <br />
+
+        <p>
+            The data below provides a detailed analysis of each of the selected stocks performance for better stock selection judgement
+        </p>
 
 
 
-        </tbody>
-    </table>
+    </tbody>
+</table>
    
 }
 

@@ -1,19 +1,23 @@
 ﻿body {
     background-color: #001f3f;
-    background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/UhGJuGw/global-business-finance-background_edwkxxznl__F0000.png");
+    background-image: url("https://previews.123rf.com/images/komokvm/komokvm1803/komokvm180300005/97125079-stock-market-chart-as-a-background-for-the-site.jpg");
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: #DDDDDD;
+    color: black;
     background-size: cover;
     background-repeat: no-repeat;
+    border-bottom: 3px solid;
 }
 
-.nav-bar {
-    background-color: black;
-    color: cornsilk;
+.nav-bar a {
+    background-color: white;
+    color: #04e9f8;
     font-size: x-large;
     text-align: center;
-    padding: 14px 16px;
-    opacity: 0.9;
+    padding: 12px 10px;
+    opacity: 1;
+    border: 3px solid #0c0f1c;
+    display: inline-block;
+    border-radius: 20px;
 }
 
 .nav-bar > a {
