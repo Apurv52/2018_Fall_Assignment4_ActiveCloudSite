@@ -7,51 +7,54 @@
 <hr />
 
 <div> <font size="+2">
-    <p>
-        Top 5 stocks selection criteria:
+          <p>
+              <u> Top 5 stocks selection criteria:</u>
 
-        <br />
-        <br />
+              <br />
+              <br />
 
-        We have modified the API to extract key statics of the stocks which are traded on IEXTrading Exchange.
-        <br />
-        From that list we identified the stocks that have the highest EBITDA (Earnings Before Interest, Tax, Depreciation and Amortization)
-        after identifying such stocks we then identified the stocks from that list which have the highest divident rate i.e. companies that have provided the highest divident to the cusotmers
-        and finally identifyed from that list the companies which have the highest priceTobook ratio (price to book ration allows us to compare the firms market value to book value to identify if the identified stock is over / under valued
-        which provides us a better judgement of the stock.
-        <br />
+              We have modified the API to extract key statics of the stocks which are traded on IEXTrading Exchange.
+              <br />
+              From that list we identified the stocks that have the highest EBITDA (Earnings Before Interest, Tax, Depreciation and Amortization)
+              after identifying such stocks we then identified the stocks from that list which have the highest divident rate i.e. companies that have provided the highest divident to the cusotmers
+              and finally identifyed from that list the companies which have the highest priceTobook ratio (price to book ration allows us to compare the firms market value to book value to identify if the identified stock is over / under valued
+              which provides us a better judgement of the stock.
+              <br />
 
-        <br />
-        Furthermore, we extracted the below mentioned variables for each stock, these variables/ratios are important indicators to better
-        <br />
-        understand the stock performance:
+              <br />
+              Furthermore, we extracted the below mentioned variables for each stock, these variables/ratios are important indicators to better
+              <br />
+              understand the stock performance:
 
-        <ul style="list-style-type:disc">
-            <li>EBITDA - EBITDA is essentially net income with interest, taxes, depreciation and amortization added back to it. EBITDA can be used to analyze and compare profitability between companies and industries because it eliminates the effects of financing and accounting decisions..</li>
-            <li>priceToBook - The price-to-book ratio, or P/B ratio, is a financial ratio used to compare a company's current market price to its book value. </li>
-            <li>dividendRate - The dividend rate is the total expected dividend payments from an investment </li>
-            <li>latestEPS - Earnings per share is the portion of a company's profit that is allocated to each outstanding share of its common stock.</li>
-            <li>year1ChangePercent - Change of the stock price in percentage in past 1 year</li>
-            <li>52 Week High - A 52-week high is the highest that a stock has traded at during the previous year.</li>
-            <li>52 Week Low - A 52-week low is the lowest that a stock has traded at during the previous year.</li>
-        </ul>
-        <br />
-        Self Reflection:
-        <br />
-        While working on this assignment we developed an understanding of the functionality and work flow of the MVC framework.
-        <br />
-        For our stock picking strategy we modified the stock API provided by the IEXTrading website to obtain detailed variables and
-        <br />
-        ratios such as EBITDA, Year to date Change in value, 52 week high ~ low values. We stored this information in the
-        <br />
-        database and selected the top 5 best performing stocks on the basis of highest change in percentage which shows that the
-        <br />
-        respective stock has been growing in value and when compared with the rest of the ratios our strategy provides a sound
-        <br />
-        understanding about the value of the company. Furthermore, we created new action methods and view models to store the list
-        <br />
-        of stocks which we selected as per our strategy which improved our understanding of the MVC framework.
+              <ul style="list-style-type:disc">
+                  <li>EBITDA - EBITDA is essentially net income with interest, taxes, depreciation and amortization added back to it. EBITDA can be used to analyze and compare profitability between companies and industries because it eliminates the effects of financing and accounting decisions..</li>
+                  <li>priceToBook - The price-to-book ratio, or P/B ratio, is a financial ratio used to compare a company's current market price to its book value. </li>
+                  <li>dividendRate - The dividend rate is the total expected dividend payments from an investment </li>
+                  <li>latestEPS - Earnings per share is the portion of a company's profit that is allocated to each outstanding share of its common stock.</li>
+                  <li>year1ChangePercent - Change of the stock price in percentage in past 1 year</li>
+                  <li>52 Week High - A 52-week high is the highest that a stock has traded at during the previous year.</li>
+                  <li>52 Week Low - A 52-week low is the lowest that a stock has traded at during the previous year.</li>
+              </ul>
 
 
-    </p>
+              <br />
+              <u> Self Reflection:</u>
+              <br />
+              While working on this assignment we developed an understanding of the functionality and work flow of the MVC framework.
+              <br />
+              For our stock picking strategy we modified the stock API provided by the IEXTrading website to obtain detailed variables and
+              <br />
+              ratios such as EBITDA, Year to date Change in value, 52 week high ~ low values. We stored this information in the
+              <br />
+              database and selected the top 5 best performing stocks on the basis of highest change in percentage which shows that the
+              <br />
+              respective stock has been growing in value and when compared with the rest of the ratios our strategy provides a sound
+              <br />
+              understanding about the value of the company. Furthermore, we created new action methods and view models to store the list
+              <br />
+              of stocks which we selected as per our strategy which improved our understanding of the MVC framework.
+
+
+          </p>
+       </font>
 </div>
